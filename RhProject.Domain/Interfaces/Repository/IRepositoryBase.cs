@@ -12,5 +12,6 @@ namespace RhProject.Domain.Interfaces.Repository
         void Alterar(TEntity entity);
         void Remover(TEntity entity);
         Task CommitAsync(CancellationToken cancellationToken);
+        Task<List<TEntity>> ObterTodosAsync(CancellationToken cancellationToken);
     }
 }

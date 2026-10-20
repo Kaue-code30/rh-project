@@ -14,6 +14,7 @@ namespace RhProject.Infrastructure
             services.AddDbContext<RhContext>(options => options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
             services.AddScoped(typeof(IRepositoryBase<>), typeof(RepositoryBase<>));
+            services.AddScoped<ICooperadoRepository, CooperadoRepository>();
 
             return services;
         }

@@ -17,12 +17,17 @@ namespace RhProject.Infrastructure.Repositories
 
         public async Task<TEntity?> ObterPorIdAsync(int id, CancellationToken cancellationToken)
         {
-            return await _context.Set<TEntity>().FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+            return await _context.Set<TEntity>().FirstOrDefaultAsync(x => x.Id == id && x.Ativo, cancellationToken);
         }
 
         public async Task AdicionarAsync(TEntity entity, CancellationToken cancellationToken)
         {
             await _context.Set<TEntity>().AddAsync(entity, cancellationToken);
+        }
+
+        public async Task<List<TEntity>> ObterTodosAsync(CancellationToken cancellationToken)
+        {
+            return await _context.Set<TEntity>().Where(x => x.Ativo).ToListAsync(cancellationToken);
         }
 
         public void Alterar(TEntity entity)
@@ -32,7 +37,9 @@ namespace RhProject.Infrastructure.Repositories
 
         public void Remover(TEntity entity)
         {
-            _context.Set<TEntity>().Remove(entity);
+            entity.Inativar();
+
+            _context.Set<TEntity>().Update(entity);
         }
 
         public async Task CommitAsync(CancellationToken cancellationToken)
