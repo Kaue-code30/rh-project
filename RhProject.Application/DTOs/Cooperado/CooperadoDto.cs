@@ -1,4 +1,7 @@
-﻿namespace RhProject.Application.DTOs.Cooperado
+﻿using RhProject.Application.DTOs.Funcao;
+using RhProject.Domain.Entities;
+
+namespace RhProject.Application.DTOs.Cooperado
 {
     public class CooperadoDto
     {
@@ -9,8 +12,7 @@
         public string Telefone { get; set; } = string.Empty;
         public DateTime DataNascimento { get; set; }
         public DateTime DataInicio { get; set; }
-
         public int FuncaoId { get; set; }
-        public string Funcao { get; set; } = string.Empty;
+        public FuncaoDto Funcao { get; set; } = new();
     }
 }

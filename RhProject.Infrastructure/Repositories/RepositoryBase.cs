@@ -15,17 +15,17 @@ namespace RhProject.Infrastructure.Repositories
             _context = context;
         }
 
-        public async Task<TEntity?> ObterPorIdAsync(int id, CancellationToken cancellationToken)
+        public virtual async Task<TEntity?> ObterPorIdAsync(int id, CancellationToken cancellationToken)
         {
             return await _context.Set<TEntity>().FirstOrDefaultAsync(x => x.Id == id && x.Ativo, cancellationToken);
         }
 
-        public async Task AdicionarAsync(TEntity entity, CancellationToken cancellationToken)
+        public virtual async Task AdicionarAsync(TEntity entity, CancellationToken cancellationToken)
         {
             await _context.Set<TEntity>().AddAsync(entity, cancellationToken);
         }
 
-        public async Task<List<TEntity>> ObterTodosAsync(CancellationToken cancellationToken)
+        public virtual async Task<List<TEntity>> ObterTodosAsync(CancellationToken cancellationToken)
         {
             return await _context.Set<TEntity>().Where(x => x.Ativo).ToListAsync(cancellationToken);
         }

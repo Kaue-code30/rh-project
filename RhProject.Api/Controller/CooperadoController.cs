@@ -27,7 +27,7 @@ namespace RhProject.Api.Controllers
         [HttpGet("listar")]
         public async Task<IActionResult> Listar(CancellationToken cancellationToken)
         {
-            var result = await _mediator.Send(new ListarCooperadosPorFuncaoQuery(), cancellationToken);
+            var result = await _mediator.Send(new ListarCooperadosQuery(), cancellationToken);
 
             return Ok(result);
         }

@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using RhProject.Application.DTOs;
 using RhProject.Application.DTOs.Cooperado;
+using RhProject.Application.DTOs.Funcao;
 using RhProject.Domain.Interfaces.Repository;
 
 namespace RhProject.Application.Queries.Cooperado.Listar
@@ -29,8 +30,13 @@ namespace RhProject.Application.Queries.Cooperado.Listar
                     Telefone = x.Telefone,
                     DataNascimento = x.DataNascimento,
                     DataInicio = x.DataInicio,
-                    FuncaoId = x.FuncaoId
-                }).ToList();
+                    FuncaoId = x.FuncaoId,
+                    Funcao = new FuncaoDto
+                    {
+                        Id = x.Funcao!.Id,
+                        Descricao = x.Funcao.Descricao
+                    }
+            }).ToList();
         }
     }
 }

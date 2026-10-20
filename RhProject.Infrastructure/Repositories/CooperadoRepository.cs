@@ -13,9 +13,19 @@ namespace RhProject.Infrastructure.Repositories
         {
             return await _context
                 .Set<Cooperado>()
-                .Where(x =>
-                    x.FuncaoId == funcaoId &&
-                    x.Ativo).ToListAsync(cancellationToken);
+                .Include(x => x.Funcao)
+                .AsNoTracking()
+                .Where(x => x.FuncaoId == funcaoId && x.Ativo)
+                .ToListAsync(cancellationToken);
+        }
+
+        public override Task<List<Cooperado>> ObterTodosAsync(CancellationToken cancellationToken)
+        {
+            return _context.Set<Cooperado>()
+                .Include(x => x.Funcao)
+                .Where(x => x.Ativo)
+                .AsNoTracking()
+                .ToListAsync(cancellationToken);
         }
     }
 }
