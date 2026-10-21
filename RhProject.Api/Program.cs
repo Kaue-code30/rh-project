@@ -4,6 +4,7 @@ using RhProject.Application.Behaviors;
 using RhProject.Application.Commands.Base.CriarBase;
 using RhProject.Infrastructure;
 using FluentValidation;
+using RhProject.Application.Commands.Cooperado.CriarCooperado;
 
 var builder = WebApplication.CreateBuilder(args);
 
