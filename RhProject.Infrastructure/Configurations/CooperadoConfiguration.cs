@@ -17,6 +17,7 @@ namespace RhProject.Infrastructure.Configurations
             builder.Property(x => x.DataNascimento).IsRequired();
             builder.Property(x => x.DataInicio).IsRequired();
             builder.HasOne(x => x.Funcao).WithMany().HasForeignKey(x => x.FuncaoId).OnDelete(DeleteBehavior.Restrict);
+            builder.HasOne(x => x.Base).WithMany().HasForeignKey(x => x.BaseId).OnDelete(DeleteBehavior.Restrict);
             builder.Property(x => x.Ativo).IsRequired();
             builder.Property(x => x.DataCadastro).IsRequired();
         }

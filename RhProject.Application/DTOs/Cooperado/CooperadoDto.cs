@@ -13,6 +13,7 @@ namespace RhProject.Application.DTOs.Cooperado
         public DateTime DataNascimento { get; set; }
         public DateTime DataInicio { get; set; }
         public int FuncaoId { get; set; }
+        public int BaseId { get; set; }
         public FuncaoDto Funcao { get; set; } = new();
     }
 }
