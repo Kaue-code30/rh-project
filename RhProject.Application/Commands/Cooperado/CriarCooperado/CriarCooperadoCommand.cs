@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace RhProject.Application.Commands.Base.CriarBase
+namespace RhProject.Application.Commands.Cooperado.CriarCooperado
 {
     public class CriarCooperadoCommand : IRequest<int>
     {

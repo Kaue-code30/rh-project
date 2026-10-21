@@ -55,5 +55,15 @@ namespace RhProject.Domain.Entities
             BaseId = baseEmp.Id;
 
         }
+
+        public void Atualizar(string nome, string email, string telefone, int funcaoId, Base baseEmp)
+        {
+            Nome = nome;
+            Email = email;
+            Telefone = telefone;
+            FuncaoId = funcaoId;
+            Base = baseEmp;
+            BaseId = baseEmp.Id;
+        }
     }
 }

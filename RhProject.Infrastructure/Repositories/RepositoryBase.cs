@@ -40,12 +40,12 @@ namespace RhProject.Infrastructure.Repositories
             return await _context.Set<TEntity>().Where(predicate).ToListAsync(cancellationToken);
         }
 
-        public void Alterar(TEntity entity)
+        public virtual async Task Alterar(TEntity entity, CancellationToken cancellationToken)
         {
             _context.Set<TEntity>().Update(entity);
         }
 
-        public void Remover(TEntity entity)
+        public virtual async Task Remover(TEntity entity, CancellationToken cancellationToken)
         {
             entity.Inativar();
 

@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using RhProject.Domain.Validators;
 
-namespace RhProject.Application.Commands.Base.CriarBase
+namespace RhProject.Application.Commands.Cooperado.CriarCooperado
 {
     public class CriarCooperadoCommandValidator
         : AbstractValidator<CriarCooperadoCommand>

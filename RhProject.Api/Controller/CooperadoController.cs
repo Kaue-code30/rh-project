@@ -1,6 +1,8 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using RhProject.Application.Commands.Base.CriarBase;
+using RhProject.Application.Commands.Cooperado.AtualizarCooperado;
+using RhProject.Application.Commands.Cooperado.CriarCooperado;
+using RhProject.Application.Commands.Cooperado.ExcluirCooperado;
 using RhProject.Application.Queries.Cooperado.Listar;
 
 namespace RhProject.Api.Controllers
@@ -22,6 +24,22 @@ namespace RhProject.Api.Controllers
             var id = await _mediator.Send(command,cancellationToken);
 
             return Ok(id);
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> Atualizar([FromBody] AtualizarCooperadoCommand command, CancellationToken cancellationToken)
+        {
+            var response = await _mediator.Send(command,cancellationToken);
+
+            return Ok(response);
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> Deletar([FromBody] ExcluirCooperadoCommand command,CancellationToken cancellationToken)
+        {
+            var response = await _mediator.Send(command, cancellationToken);
+
+            return Ok(response);
         }
 
         [HttpGet("listar")]

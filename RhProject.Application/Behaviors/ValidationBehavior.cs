@@ -36,7 +36,13 @@ namespace RhProject.Application.Behaviors
                 .ToList();
 
             if (failures.Count != 0)
-                throw new BadRequestException("CPF inválido");
+            {
+                var mensagens = failures
+                    .Select(x => x.ErrorMessage);
+
+                throw new BadRequestException(
+                    string.Join(" | ", mensagens));
+            }
 
             return await next();
         }
