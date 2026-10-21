@@ -39,5 +39,13 @@ namespace RhProject.Api.Controllers
 
             return Ok(result);
         }
+
+        [HttpGet("listarPorBase/{baseId}")]
+        public async Task<IActionResult> ListarPorBase(int baseId, CancellationToken cancellationToken)
+        {
+            var result = await _mediator.Send(new ListarCooperadosPorBaseQuery { BaseId = baseId }, cancellationToken);
+
+            return Ok(result);
+        }
     }
 }

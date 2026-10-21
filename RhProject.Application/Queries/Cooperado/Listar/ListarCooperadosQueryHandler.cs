@@ -30,6 +30,7 @@ namespace RhProject.Application.Queries.Cooperado.Listar
                     DataNascimento = x.DataNascimento,
                     DataInicio = x.DataInicio,
                     FuncaoId = x.FuncaoId,
+                    BaseId = x.BaseId,
                     Funcao = new DTOs.Funcao.FuncaoDto
                     {
                         Id = x.Funcao.Id,

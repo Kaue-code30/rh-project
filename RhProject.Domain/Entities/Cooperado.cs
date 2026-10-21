@@ -6,7 +6,7 @@ namespace RhProject.Domain.Entities
 {
     public class Cooperado : BaseEntity
     {
-        public Cooperado(string nome, string email, string cpf, string telefone, DateTime dataNascimento, DateTime dataInicio, int funcaoId)
+        public Cooperado(string nome, string email, string cpf, string telefone, DateTime dataNascimento, DateTime dataInicio, int funcaoId, int baseId)
         {
             Nome = nome;
             Email = email;
@@ -15,6 +15,7 @@ namespace RhProject.Domain.Entities
             DataNascimento = dataNascimento;
             DataInicio = dataInicio;
             FuncaoId = funcaoId;
+            BaseId = baseId;
         }
 
         public string Nome { get; private set; }
@@ -24,7 +25,10 @@ namespace RhProject.Domain.Entities
         public DateTime DataNascimento { get; private set; }
         public DateTime DataInicio { get; private set; }
         public int FuncaoId { get; private set; }
+        public int BaseId { get; private set; }
         public Funcao Funcao { get; private set; }
+        public Base Base { get; private set; }
+
 
 
         public void AtualizarNome(string nome)
@@ -45,5 +49,11 @@ namespace RhProject.Domain.Entities
             FuncaoId = funcao.Id;
         }
 
+        public void AtualizarBase(Base baseEmp)
+        {
+            Base = baseEmp;
+            BaseId = baseEmp.Id;
+
+        }
     }
 }

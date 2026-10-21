@@ -61,6 +61,9 @@ namespace RhProject.Infrastructure.Migrations
                     b.Property<bool>("Ativo")
                         .HasColumnType("bit");
 
+                    b.Property<int>("BaseId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Cpf")
                         .IsRequired()
                         .HasMaxLength(11)
@@ -94,6 +97,8 @@ namespace RhProject.Infrastructure.Migrations
                         .HasColumnType("nvarchar(20)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("BaseId");
 
                     b.HasIndex("FuncaoId");
 
@@ -149,11 +154,19 @@ namespace RhProject.Infrastructure.Migrations
 
             modelBuilder.Entity("RhProject.Domain.Entities.Cooperado", b =>
                 {
+                    b.HasOne("RhProject.Domain.Entities.Base", "Base")
+                        .WithMany()
+                        .HasForeignKey("BaseId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("RhProject.Domain.Entities.Funcao", "Funcao")
                         .WithMany()
                         .HasForeignKey("FuncaoId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("Base");
 
                     b.Navigation("Funcao");
                 });

@@ -2,6 +2,7 @@
 using RhProject.Domain.Interfaces.Repository;
 using Microsoft.EntityFrameworkCore;
 using RhProject.Infrastructure.Context;
+using System.Linq.Expressions;
 
 namespace RhProject.Infrastructure.Repositories
 {
@@ -28,6 +29,15 @@ namespace RhProject.Infrastructure.Repositories
         public virtual async Task<List<TEntity>> ObterTodosAsync(CancellationToken cancellationToken)
         {
             return await _context.Set<TEntity>().Where(x => x.Ativo).ToListAsync(cancellationToken);
+        }
+
+        public  async Task<TEntity?> ObterPorCondicaoAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken)
+        {
+            return await _context.Set<TEntity>().FirstOrDefaultAsync(predicate, cancellationToken);
+        }
+        public virtual async Task<List<TEntity>> ObterTodosPorCondicaoAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken)
+        {
+            return await _context.Set<TEntity>().Where(predicate).ToListAsync(cancellationToken);
         }
 
         public void Alterar(TEntity entity)

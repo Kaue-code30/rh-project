@@ -1,6 +1,7 @@
 ﻿using RhProject.Domain.Entities;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Text;
 
 namespace RhProject.Domain.Interfaces.Repository
@@ -13,5 +14,7 @@ namespace RhProject.Domain.Interfaces.Repository
         void Remover(TEntity entity);
         Task CommitAsync(CancellationToken cancellationToken);
         Task<List<TEntity>> ObterTodosAsync(CancellationToken cancellationToken);
+        Task<List<TEntity>> ObterTodosPorCondicaoAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken);
+        Task<TEntity?> ObterPorCondicaoAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken);
     }
 }

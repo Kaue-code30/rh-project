@@ -14,5 +14,6 @@ namespace RhProject.Application.Commands.Base.CriarBase
         public DateTime DataNascimento { get; set; }
         public DateTime DataInicio { get; set; }
         public int FuncaoId { get; set; }
+        public int BaseId { get; set; }
     }
 }

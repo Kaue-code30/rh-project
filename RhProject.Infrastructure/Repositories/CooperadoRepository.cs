@@ -18,7 +18,15 @@ namespace RhProject.Infrastructure.Repositories
                 .Where(x => x.FuncaoId == funcaoId && x.Ativo)
                 .ToListAsync(cancellationToken);
         }
-
+        public async Task<List<Cooperado>> ObterPorBaseAsync(int baseId, CancellationToken cancellationToken)
+        {
+            return await _context
+                .Set<Cooperado>()
+                .Include(x => x.Funcao)
+                .AsNoTracking()
+                .Where(x => x.BaseId == baseId && x.Ativo)
+                .ToListAsync(cancellationToken);
+        }
         public override Task<List<Cooperado>> ObterTodosAsync(CancellationToken cancellationToken)
         {
             return _context.Set<Cooperado>()
@@ -26,6 +34,6 @@ namespace RhProject.Infrastructure.Repositories
                 .Where(x => x.Ativo)
                 .AsNoTracking()
                 .ToListAsync(cancellationToken);
-        }
+        }       
     }
 }
