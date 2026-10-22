@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RhProject.Application.Commands.Base.AtualizarBase;
 using RhProject.Application.Commands.Base.CriarBase;
@@ -8,6 +9,7 @@ using RhProject.Application.Queries.Base.Listar;
 namespace RhProject.Api.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/[controller]")]
     public class BaseController : ControllerBase
     {

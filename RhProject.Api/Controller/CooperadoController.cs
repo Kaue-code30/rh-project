@@ -4,10 +4,12 @@ using RhProject.Application.Commands.Cooperado.AtualizarCooperado;
 using RhProject.Application.Commands.Cooperado.CriarCooperado;
 using RhProject.Application.Commands.Cooperado.ExcluirCooperado;
 using RhProject.Application.Queries.Cooperado.Listar;
+using Microsoft.AspNetCore.Authorization;
 
 namespace RhProject.Api.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/[controller]")]
     public class CooperadoController : ControllerBase
     {

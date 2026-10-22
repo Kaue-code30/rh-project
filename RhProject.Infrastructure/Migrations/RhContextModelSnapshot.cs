@@ -152,6 +152,69 @@ namespace RhProject.Infrastructure.Migrations
                         });
                 });
 
+            modelBuilder.Entity("RhProject.Domain.Entities.Perfil", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Ativo")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("DataCadastro")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Descricao")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Perfil", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Ativo = true,
+                            DataCadastro = new DateTime(2026, 10, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Descricao = "Possui acesso completo ao sistema, podendo gerenciar cooperados, usuários, bases, funções, documentos, férias, financeiro, relatórios e configurações.",
+                            Nome = "Administrador"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Ativo = true,
+                            DataCadastro = new DateTime(2026, 10, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Descricao = "Responsável pela gestão dos cooperados vinculados às bases sob sua responsabilidade, podendo consultar informações, acompanhar documentos, plantões e solicitações conforme suas permissões.",
+                            Nome = "Coordenador"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Ativo = true,
+                            DataCadastro = new DateTime(2026, 10, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Descricao = "Possui acesso às próprias informações cadastrais, documentos, plantões, saldo de férias, solicitações e treinamentos disponibilizados pelo sistema.",
+                            Nome = "Cooperado"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Ativo = true,
+                            DataCadastro = new DateTime(2026, 10, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Descricao = "Perfil com permissões configuráveis individualmente, permitindo liberar ou restringir funcionalidades e módulos conforme a necessidade administrativa.",
+                            Nome = "Personalizado"
+                        });
+                });
+
             modelBuilder.Entity("RhProject.Domain.Entities.Usuario", b =>
                 {
                     b.Property<int>("Id")
@@ -192,6 +255,40 @@ namespace RhProject.Infrastructure.Migrations
                     b.ToTable("Usuario", (string)null);
                 });
 
+            modelBuilder.Entity("RhProject.Domain.Entities.UsuarioPerfil", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Ativo")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("BaseId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DataCadastro")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("PerfilId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UsuarioId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BaseId");
+
+                    b.HasIndex("PerfilId");
+
+                    b.HasIndex("UsuarioId");
+
+                    b.ToTable("UsuarioPerfil", (string)null);
+                });
+
             modelBuilder.Entity("RhProject.Domain.Entities.Cooperado", b =>
                 {
                     b.HasOne("RhProject.Domain.Entities.Base", "Base")
@@ -218,6 +315,32 @@ namespace RhProject.Infrastructure.Migrations
                         .HasForeignKey("CooperadoId");
 
                     b.Navigation("Cooperado");
+                });
+
+            modelBuilder.Entity("RhProject.Domain.Entities.UsuarioPerfil", b =>
+                {
+                    b.HasOne("RhProject.Domain.Entities.Base", "Base")
+                        .WithMany()
+                        .HasForeignKey("BaseId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("RhProject.Domain.Entities.Perfil", "Perfil")
+                        .WithMany()
+                        .HasForeignKey("PerfilId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("RhProject.Domain.Entities.Usuario", "Usuario")
+                        .WithMany()
+                        .HasForeignKey("UsuarioId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Base");
+
+                    b.Navigation("Perfil");
+
+                    b.Navigation("Usuario");
                 });
 #pragma warning restore 612, 618
         }
