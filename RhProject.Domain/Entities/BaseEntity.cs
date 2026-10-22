@@ -11,5 +11,15 @@
             Ativo = true;
             DataCadastro = DateTime.Now;
         }
+
+        public void Inativar()
+        {
+            Ativo = false;
+        }
+
+        public void Ativar()
+        {
+            Ativo = true;
+        }
     }
 }

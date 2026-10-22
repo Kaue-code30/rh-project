@@ -26,5 +26,11 @@ namespace RhProject.Domain.Entities
         {
             Descricao = descricao;
         }
+
+        public void Atualizar(string nome, string? descricao)
+        {
+            Nome = nome;
+            Descricao = descricao;
+        }
     }
 }
