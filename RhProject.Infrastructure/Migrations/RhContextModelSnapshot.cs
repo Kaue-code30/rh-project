@@ -237,11 +237,126 @@ namespace RhProject.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PerfilId");
-
                     b.HasIndex("PermissaoId");
 
+                    b.HasIndex("PerfilId", "PermissaoId")
+                        .IsUnique();
+
                     b.ToTable("PerfilPermissao", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Ativo = true,
+                            DataCadastro = new DateTime(2026, 10, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            PerfilId = 1,
+                            PermissaoId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Ativo = true,
+                            DataCadastro = new DateTime(2026, 10, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            PerfilId = 1,
+                            PermissaoId = 2
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Ativo = true,
+                            DataCadastro = new DateTime(2026, 10, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            PerfilId = 1,
+                            PermissaoId = 3
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Ativo = true,
+                            DataCadastro = new DateTime(2026, 10, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            PerfilId = 1,
+                            PermissaoId = 4
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Ativo = true,
+                            DataCadastro = new DateTime(2026, 10, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            PerfilId = 1,
+                            PermissaoId = 5
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Ativo = true,
+                            DataCadastro = new DateTime(2026, 10, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            PerfilId = 1,
+                            PermissaoId = 6
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Ativo = true,
+                            DataCadastro = new DateTime(2026, 10, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            PerfilId = 1,
+                            PermissaoId = 7
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Ativo = true,
+                            DataCadastro = new DateTime(2026, 10, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            PerfilId = 1,
+                            PermissaoId = 8
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Ativo = true,
+                            DataCadastro = new DateTime(2026, 10, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            PerfilId = 1,
+                            PermissaoId = 9
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Ativo = true,
+                            DataCadastro = new DateTime(2026, 10, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            PerfilId = 2,
+                            PermissaoId = 1
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Ativo = true,
+                            DataCadastro = new DateTime(2026, 10, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            PerfilId = 2,
+                            PermissaoId = 2
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Ativo = true,
+                            DataCadastro = new DateTime(2026, 10, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            PerfilId = 2,
+                            PermissaoId = 3
+                        },
+                        new
+                        {
+                            Id = 13,
+                            Ativo = true,
+                            DataCadastro = new DateTime(2026, 10, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            PerfilId = 2,
+                            PermissaoId = 7
+                        },
+                        new
+                        {
+                            Id = 14,
+                            Ativo = true,
+                            DataCadastro = new DateTime(2026, 10, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            PerfilId = 2,
+                            PermissaoId = 8
+                        });
                 });
 
             modelBuilder.Entity("RhProject.Domain.Entities.Permissao", b =>
