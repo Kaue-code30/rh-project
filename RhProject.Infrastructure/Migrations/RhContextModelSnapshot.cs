@@ -152,6 +152,46 @@ namespace RhProject.Infrastructure.Migrations
                         });
                 });
 
+            modelBuilder.Entity("RhProject.Domain.Entities.Usuario", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Ativo")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("CooperadoId")
+                        .HasMaxLength(1000)
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DataCadastro")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<string>("SenhaHash")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CooperadoId");
+
+                    b.ToTable("Usuario", (string)null);
+                });
+
             modelBuilder.Entity("RhProject.Domain.Entities.Cooperado", b =>
                 {
                     b.HasOne("RhProject.Domain.Entities.Base", "Base")
@@ -169,6 +209,15 @@ namespace RhProject.Infrastructure.Migrations
                     b.Navigation("Base");
 
                     b.Navigation("Funcao");
+                });
+
+            modelBuilder.Entity("RhProject.Domain.Entities.Usuario", b =>
+                {
+                    b.HasOne("RhProject.Domain.Entities.Cooperado", "Cooperado")
+                        .WithMany()
+                        .HasForeignKey("CooperadoId");
+
+                    b.Navigation("Cooperado");
                 });
 #pragma warning restore 612, 618
         }
