@@ -215,6 +215,35 @@ namespace RhProject.Infrastructure.Migrations
                         });
                 });
 
+            modelBuilder.Entity("RhProject.Domain.Entities.PerfilPermissao", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Ativo")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("DataCadastro")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("PerfilId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PermissaoId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PerfilId");
+
+                    b.HasIndex("PermissaoId");
+
+                    b.ToTable("PerfilPermissao", (string)null);
+                });
+
             modelBuilder.Entity("RhProject.Domain.Entities.Permissao", b =>
                 {
                     b.Property<int>("Id")
@@ -241,11 +270,98 @@ namespace RhProject.Infrastructure.Migrations
 
                     b.Property<string>("Modulo")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Codigo")
+                        .IsUnique();
+
                     b.ToTable("Permissao", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Ativo = true,
+                            Codigo = "CooperadoVisualizar",
+                            DataCadastro = new DateTime(2026, 10, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Descricao = "Visualizar cooperados",
+                            Modulo = "Cooperados"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Ativo = true,
+                            Codigo = "CooperadoCriar",
+                            DataCadastro = new DateTime(2026, 10, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Descricao = "Cadastrar cooperados",
+                            Modulo = "Cooperados"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Ativo = true,
+                            Codigo = "CooperadoEditar",
+                            DataCadastro = new DateTime(2026, 10, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Descricao = "Editar cooperados",
+                            Modulo = "Cooperados"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Ativo = true,
+                            Codigo = "CooperadoExcluir",
+                            DataCadastro = new DateTime(2026, 10, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Descricao = "Excluir cooperados",
+                            Modulo = "Cooperados"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Ativo = true,
+                            Codigo = "FinanceiroVisualizar",
+                            DataCadastro = new DateTime(2026, 10, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Descricao = "Visualizar financeiro",
+                            Modulo = "Financeiro"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Ativo = true,
+                            Codigo = "FinanceiroGerenciar",
+                            DataCadastro = new DateTime(2026, 10, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Descricao = "Gerenciar financeiro",
+                            Modulo = "Financeiro"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Ativo = true,
+                            Codigo = "FeriasVisualizar",
+                            DataCadastro = new DateTime(2026, 10, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Descricao = "Visualizar férias",
+                            Modulo = "Ferias"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Ativo = true,
+                            Codigo = "FeriasAprovar",
+                            DataCadastro = new DateTime(2026, 10, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Descricao = "Aprovar férias",
+                            Modulo = "Ferias"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Ativo = true,
+                            Codigo = "RelatoriosVisualizar",
+                            DataCadastro = new DateTime(2026, 10, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Descricao = "Visualizar relatórios",
+                            Modulo = "Relatorios"
+                        });
                 });
 
             modelBuilder.Entity("RhProject.Domain.Entities.Usuario", b =>
@@ -339,6 +455,25 @@ namespace RhProject.Infrastructure.Migrations
                     b.Navigation("Base");
 
                     b.Navigation("Funcao");
+                });
+
+            modelBuilder.Entity("RhProject.Domain.Entities.PerfilPermissao", b =>
+                {
+                    b.HasOne("RhProject.Domain.Entities.Perfil", "Perfil")
+                        .WithMany()
+                        .HasForeignKey("PerfilId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("RhProject.Domain.Entities.Permissao", "Permissao")
+                        .WithMany()
+                        .HasForeignKey("PermissaoId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Perfil");
+
+                    b.Navigation("Permissao");
                 });
 
             modelBuilder.Entity("RhProject.Domain.Entities.Usuario", b =>
