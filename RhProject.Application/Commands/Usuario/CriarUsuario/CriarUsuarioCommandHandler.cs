@@ -11,13 +11,13 @@ namespace RhProject.Application.Commands.Cooperado.CriarUsuario
     public class CriarUsuarioCommandHandler : IRequestHandler<CriarUsuarioCommand, int>
     {
         private readonly IRepositoryBase<Domain.Entities.Usuario> _repository;
-        private readonly ICooperadoRepository _cooperadoRepository;
+        private readonly IRepositoryBase<Domain.Entities.UsuarioPerfil> _usuarioPerfilRepository;
         private readonly IPasswordService _passwordService;
 
-        public CriarUsuarioCommandHandler(IRepositoryBase<Domain.Entities.Usuario> repository, ICooperadoRepository cooperadoRepository, IPasswordService passwordService)
+        public CriarUsuarioCommandHandler(IRepositoryBase<Domain.Entities.Usuario> repository, IRepositoryBase<Domain.Entities.UsuarioPerfil> usuarioPerfilRepository, IPasswordService passwordService)
         {
             _repository = repository;
-            _cooperadoRepository = cooperadoRepository;
+            _usuarioPerfilRepository = usuarioPerfilRepository;
             _passwordService = passwordService;
         }
 
@@ -34,32 +34,15 @@ namespace RhProject.Application.Commands.Cooperado.CriarUsuario
 
             var senhaHash = _passwordService.HashPassword(request.Senha);
 
-            var usuario = new Domain.Entities.Usuario(request.Nome, request.Email, senhaHash, request.CooperadoId);
-
-            if (request.CooperadoId.HasValue)
-            {
-                var usuarioCooperadoJaExiste = await _repository.ObterPorCondicaoAsync(usuario => usuario.CooperadoId == request.CooperadoId && usuario.Ativo, cancellationToken);
-
-                if (usuarioCooperadoJaExiste!= null)
-                {
-                    throw new ConflictException("Cooperado já possui um usuário cadastrado.");
-                }
-
-                var cooperadoExiste = await _cooperadoRepository.ObterPorCondicaoAsync(cooperado => cooperado.Id == request.CooperadoId && cooperado.Ativo, cancellationToken);
-
-                if(cooperadoExiste == null)
-                {
-                    throw new NotFoundException($"Cooperado com o id {request.CooperadoId} não foi encontrado.");
-                }
-
-                usuario.AlterarNome(cooperadoExiste.Nome);
-                usuario.AlterarEmail(cooperadoExiste.Email);               
-                
-            }
+            var usuario = new Domain.Entities.Usuario(request.Nome, request.Email, senhaHash);           
 
             await _repository.AdicionarAsync(usuario, cancellationToken);
 
             await _repository.CommitAsync(cancellationToken);
+
+            await _usuarioPerfilRepository.AdicionarAsync(new Domain.Entities.UsuarioPerfil(usuario.Id, request.PerfilId, null), cancellationToken);
+            
+            await _usuarioPerfilRepository.CommitAsync(cancellationToken);
 
             return usuario.Id;
         }

@@ -2,13 +2,13 @@
 using Microsoft.IdentityModel.Tokens;
 using RhProject.Application.Interfaces.Security;
 using RhProject.Application.Response.Auth;
-using RhProject.Domain.Entities;
 using RhProject.Infrastructure.Configurations;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
 using UsuarioEntity = RhProject.Domain.Entities.Usuario;
+
 
 namespace RhProject.Infrastructure.Security
 {

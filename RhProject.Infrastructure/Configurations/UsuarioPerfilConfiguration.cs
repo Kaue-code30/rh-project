@@ -10,6 +10,7 @@ namespace RhProject.Infrastructure.Configurations
         {
             builder.ToTable("UsuarioPerfil");
             builder.HasKey(x => x.Id);
+            builder.HasIndex(x => x.UsuarioId).IsUnique();
             builder.HasOne(x => x.Base).WithMany().HasForeignKey(x => x.BaseId).OnDelete(DeleteBehavior.Restrict);
             builder.HasOne(x => x.Usuario).WithMany().HasForeignKey(x => x.UsuarioId).OnDelete(DeleteBehavior.Restrict);
             builder.HasOne(x => x.Perfil).WithMany().HasForeignKey(x => x.PerfilId).OnDelete(DeleteBehavior.Restrict);

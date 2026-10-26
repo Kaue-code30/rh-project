@@ -10,6 +10,6 @@ namespace RhProject.Application.Commands.Cooperado.CriarUsuario
         public string Nome { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
         public string Senha { get; set; } = string.Empty;
-        public int? CooperadoId { get; set; }
+        public int PerfilId { get; set; }
     }
 }

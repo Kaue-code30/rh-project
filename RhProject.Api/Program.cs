@@ -1,12 +1,18 @@
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
+using RhProject.Api.Authorization;
 using RhProject.Api.Middlewares;
+using RhProject.Api.Services.Authorization;
 using RhProject.Application.Behaviors;
 using RhProject.Application.Commands.Base.CriarBase;
 using RhProject.Application.Commands.Cooperado.CriarCooperado;
+using RhProject.Application.Interfaces.Authorization;
+using RhProject.Application.Service.Authorization;
+using RhProject.Domain.Enums;
 using RhProject.Infrastructure;
 using RhProject.Infrastructure.Configurations;
 using System.Text;
@@ -54,6 +60,15 @@ builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 
 // Infrastructure
 builder.Services.AddInfrastructure(builder.Configuration);
+
+builder.Services.AddScoped<IPermissaoService, PermissaoService>();
+builder.Services.AddScoped<IPerfilUsuarioService, PerfilUsuarioService>();
+builder.Services.AddScoped<IUsuarioLogadoService,UsuarioLogadoService>();
+
+// Handler de autorização por permissões
+builder.Services.AddScoped<
+    IAuthorizationHandler,
+    PermissaoAuthorizationHandler>();
 
 // FluentValidation
 builder.Services.AddValidatorsFromAssembly(
@@ -117,7 +132,21 @@ builder.Services
     });
 
 // Autorização
-builder.Services.AddAuthorization();
+builder.Services.AddAuthorization(options =>
+{
+    foreach (var permissao in Enum.GetValues<PermissaoEnum>())
+    {
+        var codigoPermissao = permissao.ToString();
+
+        options.AddPolicy(codigoPermissao, policy =>
+        {
+            policy.RequireAuthenticatedUser();
+
+            policy.AddRequirements(
+                new PermissaoRequirement(codigoPermissao));
+        });
+    }
+});
 
 var app = builder.Build();
 

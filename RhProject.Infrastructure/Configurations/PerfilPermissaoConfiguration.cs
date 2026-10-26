@@ -39,13 +39,19 @@ namespace RhProject.Infrastructure.Configurations
                 (PerfilEnum.Administrador, PermissaoEnum.FeriasVisualizar),
                 (PerfilEnum.Administrador, PermissaoEnum.FeriasAprovar),
                 (PerfilEnum.Administrador, PermissaoEnum.RelatoriosVisualizar),
+                (PerfilEnum.Administrador, PermissaoEnum.BaseVisualizar),
+                (PerfilEnum.Administrador, PermissaoEnum.BaseCriar),
+                (PerfilEnum.Administrador, PermissaoEnum.BaseEditar),
+                (PerfilEnum.Administrador, PermissaoEnum.BaseExcluir),
 
                 // Coordenador
                 (PerfilEnum.Coordenador, PermissaoEnum.CooperadoVisualizar),
                 (PerfilEnum.Coordenador, PermissaoEnum.CooperadoCriar),
                 (PerfilEnum.Coordenador, PermissaoEnum.CooperadoEditar),
                 (PerfilEnum.Coordenador, PermissaoEnum.FeriasVisualizar),
-                (PerfilEnum.Coordenador, PermissaoEnum.FeriasAprovar)
+                (PerfilEnum.Coordenador, PermissaoEnum.FeriasAprovar),
+                (PerfilEnum.Coordenador, PermissaoEnum.RelatoriosVisualizar),
+                (PerfilEnum.Coordenador, PermissaoEnum.BaseVisualizar),
             };
 
             builder.HasData(

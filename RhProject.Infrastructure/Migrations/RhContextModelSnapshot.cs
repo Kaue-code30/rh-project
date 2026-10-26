@@ -548,7 +548,8 @@ namespace RhProject.Infrastructure.Migrations
 
                     b.HasIndex("PerfilId");
 
-                    b.HasIndex("UsuarioId");
+                    b.HasIndex("UsuarioId")
+                        .IsUnique();
 
                     b.ToTable("UsuarioPerfil", (string)null);
                 });

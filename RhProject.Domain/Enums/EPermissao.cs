@@ -29,6 +29,18 @@ namespace RhProject.Domain.Enums
         FeriasAprovar = 8,
 
         [Description("Visualizar relatórios")]
-        RelatoriosVisualizar = 9
+        RelatoriosVisualizar = 9,
+
+        [Description("Visualizar bases")]
+        BaseVisualizar = 10,
+
+        [Description("Cadastrar bases")]
+        BaseCriar = 11,
+
+        [Description("Editar bases")]
+        BaseEditar = 12,
+
+        [Description("Excluir bases")]
+        BaseExcluir = 13
     }
 }

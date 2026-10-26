@@ -1,10 +1,11 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RhProject.Application.Commands.Cooperado.AtualizarCooperado;
 using RhProject.Application.Commands.Cooperado.CriarCooperado;
 using RhProject.Application.Commands.Cooperado.ExcluirCooperado;
 using RhProject.Application.Queries.Cooperado.Listar;
-using Microsoft.AspNetCore.Authorization;
+using RhProject.Domain.Enums;
 
 namespace RhProject.Api.Controllers
 {
@@ -20,6 +21,7 @@ namespace RhProject.Api.Controllers
             _mediator = mediator;
         }
 
+        [Authorize(Policy = nameof(PermissaoEnum.CooperadoCriar))]
         [HttpPost]
         public async Task<IActionResult> Criar([FromBody] CriarCooperadoCommand command,CancellationToken cancellationToken)
         {
@@ -28,6 +30,7 @@ namespace RhProject.Api.Controllers
             return Ok(id);
         }
 
+        [Authorize(Policy = nameof(PermissaoEnum.CooperadoEditar))]
         [HttpPut]
         public async Task<IActionResult> Atualizar([FromBody] AtualizarCooperadoCommand command, CancellationToken cancellationToken)
         {
@@ -36,6 +39,7 @@ namespace RhProject.Api.Controllers
             return Ok(response);
         }
 
+        [Authorize(Policy = nameof(PermissaoEnum.CooperadoExcluir))]
         [HttpDelete]
         public async Task<IActionResult> Deletar([FromBody] ExcluirCooperadoCommand command,CancellationToken cancellationToken)
         {
@@ -44,6 +48,7 @@ namespace RhProject.Api.Controllers
             return Ok(response);
         }
 
+        [Authorize(Policy = nameof(PermissaoEnum.CooperadoVisualizar))]
         [HttpGet("listar")]
         public async Task<IActionResult> Listar(CancellationToken cancellationToken)
         {
@@ -52,6 +57,7 @@ namespace RhProject.Api.Controllers
             return Ok(result);
         }
 
+        [Authorize(Policy = nameof(PermissaoEnum.CooperadoVisualizar))]
         [HttpGet("listarPorFuncao/{funcaoId}")]
         public async Task<IActionResult> ListarPorFuncao(int funcaoId, CancellationToken cancellationToken)
         {
@@ -60,6 +66,7 @@ namespace RhProject.Api.Controllers
             return Ok(result);
         }
 
+        [Authorize(Policy = nameof(PermissaoEnum.CooperadoVisualizar))]
         [HttpGet("listarPorBase/{baseId}")]
         public async Task<IActionResult> ListarPorBase(int baseId, CancellationToken cancellationToken)
         {

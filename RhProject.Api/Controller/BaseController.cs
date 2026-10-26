@@ -5,6 +5,7 @@ using RhProject.Application.Commands.Base.AtualizarBase;
 using RhProject.Application.Commands.Base.CriarBase;
 using RhProject.Application.Commands.Base.ExcluirBase;
 using RhProject.Application.Queries.Base.Listar;
+using RhProject.Domain.Enums;
 
 namespace RhProject.Api.Controllers
 {
@@ -20,6 +21,7 @@ namespace RhProject.Api.Controllers
             _mediator = mediator;
         }
 
+        [Authorize(Policy = nameof(PermissaoEnum.BaseCriar))]
         [HttpPost]
         public async Task<IActionResult> Criar([FromBody] CriarBaseCommand command,CancellationToken cancellationToken)
         {
@@ -28,6 +30,7 @@ namespace RhProject.Api.Controllers
             return Ok(id);
         }
 
+        [Authorize(Policy = nameof(PermissaoEnum.BaseEditar))]
         [HttpPut]
         public async Task<IActionResult> Atualizar([FromBody] AtualizarBaseCommand command,CancellationToken cancellationToken)
         {
@@ -36,6 +39,7 @@ namespace RhProject.Api.Controllers
             return Ok(response);
         }
 
+        [Authorize(Policy = nameof(PermissaoEnum.BaseExcluir))]
         [HttpDelete]
         public async Task<IActionResult> Remover([FromBody] ExcluirBaseCommand command,CancellationToken cancellationToken)
         {
@@ -44,6 +48,7 @@ namespace RhProject.Api.Controllers
             return Ok(response);
         }
 
+        [Authorize(Policy = nameof(PermissaoEnum.BaseVisualizar))]
         [HttpGet]
         public async Task<IActionResult> Listar(CancellationToken cancellationToken)
         {
