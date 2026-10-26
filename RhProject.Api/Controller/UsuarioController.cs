@@ -27,6 +27,15 @@ namespace RhProject.Api.Controllers
             return Ok(id);
         }
 
+        [HttpPost("cooperado")]
+        [Authorize]
+        public async Task<IActionResult> CriarUsuarioCooperado([FromBody] CriarUsuarioCooperadoCommand command, CancellationToken cancellationToken)
+        {
+            var id = await _mediator.Send(command, cancellationToken);
+
+            return Ok(id);
+        }
+
         [HttpGet("me")]
         [Authorize]
         public IActionResult Me()

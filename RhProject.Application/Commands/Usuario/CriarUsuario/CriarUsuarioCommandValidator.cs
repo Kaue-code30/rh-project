@@ -29,10 +29,9 @@ namespace RhProject.Application.Commands.Usuario.CriarUsuario
                 .MaximumLength(128)
                     .WithMessage("A senha não pode exceder 128 caracteres.");
 
-            RuleFor(c => c.CooperadoId)
+            RuleFor(c => c.PerfilId)
                 .GreaterThan(0)
-                    .When(c => c.CooperadoId.HasValue)
-                    .WithMessage("O cooperado informado é inválido.");
+                    .WithMessage("O perfil informado é inválido.");
         }
     }
 }

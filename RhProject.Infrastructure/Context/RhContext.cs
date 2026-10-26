@@ -9,6 +9,7 @@ namespace RhProject.Infrastructure.Context
         {}
 
         public DbSet<Base> Bases { get; set; }
+        public DbSet<UsuarioBase> UsuariosBases { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

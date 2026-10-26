@@ -23,6 +23,8 @@ namespace RhProject.Domain.Entities
         public int? CooperadoId { get; private set; }
         public Cooperado? Cooperado { get; private set; }
 
+        public ICollection<UsuarioBase> UsuarioBases { get; private set; } = new List<UsuarioBase>();
+
         public void AlterarSenha(string novoHash)
         {
             SenhaHash = novoHash;

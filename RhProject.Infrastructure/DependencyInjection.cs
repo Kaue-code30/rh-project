@@ -21,6 +21,7 @@ namespace RhProject.Infrastructure
             services.AddScoped<ICooperadoRepository, CooperadoRepository>();
             services.AddScoped<IPasswordService, PasswordService>();
             services.AddScoped<IJwtTokenService, JwtTokenService>();
+            services.AddScoped<IUsuarioBaseRepository, UsuarioBaseRepository>();
 
             return services;
         }
