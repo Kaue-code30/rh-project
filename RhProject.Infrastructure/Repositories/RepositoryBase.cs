@@ -2,6 +2,7 @@
 using RhProject.Domain.Interfaces.Repository;
 using Microsoft.EntityFrameworkCore;
 using RhProject.Infrastructure.Context;
+using System.Linq.Expressions;
 
 namespace RhProject.Infrastructure.Repositories
 {
@@ -15,24 +16,40 @@ namespace RhProject.Infrastructure.Repositories
             _context = context;
         }
 
-        public async Task<TEntity?> ObterPorIdAsync(int id, CancellationToken cancellationToken)
+        public virtual async Task<TEntity?> ObterPorIdAsync(int id, CancellationToken cancellationToken)
         {
-            return await _context.Set<TEntity>().FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+            return await _context.Set<TEntity>().FirstOrDefaultAsync(x => x.Id == id && x.Ativo, cancellationToken);
         }
 
-        public async Task AdicionarAsync(TEntity entity, CancellationToken cancellationToken)
+        public virtual async Task AdicionarAsync(TEntity entity, CancellationToken cancellationToken)
         {
             await _context.Set<TEntity>().AddAsync(entity, cancellationToken);
         }
 
-        public void Alterar(TEntity entity)
+        public virtual async Task<List<TEntity>> ObterTodosAsync(CancellationToken cancellationToken)
+        {
+            return await _context.Set<TEntity>().Where(x => x.Ativo).ToListAsync(cancellationToken);
+        }
+
+        public  async Task<TEntity?> ObterPorCondicaoAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken)
+        {
+            return await _context.Set<TEntity>().FirstOrDefaultAsync(predicate, cancellationToken);
+        }
+        public virtual async Task<List<TEntity>> ObterTodosPorCondicaoAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken)
+        {
+            return await _context.Set<TEntity>().Where(predicate).ToListAsync(cancellationToken);
+        }
+
+        public virtual async Task Alterar(TEntity entity, CancellationToken cancellationToken)
         {
             _context.Set<TEntity>().Update(entity);
         }
 
-        public void Remover(TEntity entity)
+        public virtual async Task Remover(TEntity entity, CancellationToken cancellationToken)
         {
-            _context.Set<TEntity>().Remove(entity);
+            entity.Inativar();
+
+            _context.Set<TEntity>().Update(entity);
         }
 
         public async Task CommitAsync(CancellationToken cancellationToken)
