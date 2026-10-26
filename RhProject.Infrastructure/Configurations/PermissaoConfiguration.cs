@@ -72,6 +72,12 @@ namespace RhProject.Infrastructure.Configurations
                 PermissaoEnum.RelatoriosVisualizar
                     => "Relatorios",
 
+                PermissaoEnum.BaseVisualizar
+                    or PermissaoEnum.BaseCriar
+                    or PermissaoEnum.BaseEditar
+                    or PermissaoEnum.BaseExcluir
+                    => "Base",
+
                 _ => throw new ArgumentOutOfRangeException(
                     nameof(permissao),
                     permissao,

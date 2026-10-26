@@ -19,6 +19,19 @@ namespace RhProject.Api.Services.Authorization
         private ClaimsPrincipal? Usuario => _httpContextAccessor.HttpContext?.User;
 
         public bool EstaAutenticado => Usuario?.Identity?.IsAuthenticated == true;
+        public int BaseId
+        {
+            get
+            {
+                var baseIdClaim = Usuario?.FindFirst("baseId")?.Value;
+
+                if (!int.TryParse(baseIdClaim, out var baseId) || baseId <= 0)
+                    throw new InvalidOperationException(
+                        "O usuário autenticado não possui uma base válida.");
+
+                return baseId;
+            }
+        }
 
         public int? UsuarioId
         {

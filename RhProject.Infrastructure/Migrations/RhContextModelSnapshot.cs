@@ -356,6 +356,54 @@ namespace RhProject.Infrastructure.Migrations
                             DataCadastro = new DateTime(2026, 10, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PerfilId = 2,
                             PermissaoId = 8
+                        },
+                        new
+                        {
+                            Id = 15,
+                            Ativo = true,
+                            DataCadastro = new DateTime(2026, 10, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            PerfilId = 2,
+                            PermissaoId = 9
+                        },
+                        new
+                        {
+                            Id = 16,
+                            Ativo = true,
+                            DataCadastro = new DateTime(2026, 10, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            PerfilId = 1,
+                            PermissaoId = 10
+                        },
+                        new
+                        {
+                            Id = 17,
+                            Ativo = true,
+                            DataCadastro = new DateTime(2026, 10, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            PerfilId = 1,
+                            PermissaoId = 11
+                        },
+                        new
+                        {
+                            Id = 18,
+                            Ativo = true,
+                            DataCadastro = new DateTime(2026, 10, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            PerfilId = 1,
+                            PermissaoId = 12
+                        },
+                        new
+                        {
+                            Id = 19,
+                            Ativo = true,
+                            DataCadastro = new DateTime(2026, 10, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            PerfilId = 1,
+                            PermissaoId = 13
+                        },
+                        new
+                        {
+                            Id = 20,
+                            Ativo = true,
+                            DataCadastro = new DateTime(2026, 10, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            PerfilId = 2,
+                            PermissaoId = 10
                         });
                 });
 
@@ -476,6 +524,42 @@ namespace RhProject.Infrastructure.Migrations
                             DataCadastro = new DateTime(2026, 10, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Descricao = "Visualizar relatórios",
                             Modulo = "Relatorios"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Ativo = true,
+                            Codigo = "BaseVisualizar",
+                            DataCadastro = new DateTime(2026, 10, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Descricao = "Visualizar bases",
+                            Modulo = "Base"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Ativo = true,
+                            Codigo = "BaseCriar",
+                            DataCadastro = new DateTime(2026, 10, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Descricao = "Cadastrar bases",
+                            Modulo = "Base"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Ativo = true,
+                            Codigo = "BaseEditar",
+                            DataCadastro = new DateTime(2026, 10, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Descricao = "Editar bases",
+                            Modulo = "Base"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            Ativo = true,
+                            Codigo = "BaseExcluir",
+                            DataCadastro = new DateTime(2026, 10, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Descricao = "Excluir bases",
+                            Modulo = "Base"
                         });
                 });
 
@@ -517,6 +601,36 @@ namespace RhProject.Infrastructure.Migrations
                     b.HasIndex("CooperadoId");
 
                     b.ToTable("Usuario", (string)null);
+                });
+
+            modelBuilder.Entity("RhProject.Domain.Entities.UsuarioBase", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Ativo")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("BaseId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DataCadastro")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("UsuarioId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BaseId");
+
+                    b.HasIndex("UsuarioId", "BaseId")
+                        .IsUnique();
+
+                    b.ToTable("UsuarioBase", (string)null);
                 });
 
             modelBuilder.Entity("RhProject.Domain.Entities.UsuarioPerfil", b =>
@@ -601,6 +715,25 @@ namespace RhProject.Infrastructure.Migrations
                     b.Navigation("Cooperado");
                 });
 
+            modelBuilder.Entity("RhProject.Domain.Entities.UsuarioBase", b =>
+                {
+                    b.HasOne("RhProject.Domain.Entities.Base", "Base")
+                        .WithMany("UsuariosBases")
+                        .HasForeignKey("BaseId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("RhProject.Domain.Entities.Usuario", "Usuario")
+                        .WithMany("UsuarioBases")
+                        .HasForeignKey("UsuarioId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Base");
+
+                    b.Navigation("Usuario");
+                });
+
             modelBuilder.Entity("RhProject.Domain.Entities.UsuarioPerfil", b =>
                 {
                     b.HasOne("RhProject.Domain.Entities.Base", "Base")
@@ -625,6 +758,16 @@ namespace RhProject.Infrastructure.Migrations
                     b.Navigation("Perfil");
 
                     b.Navigation("Usuario");
+                });
+
+            modelBuilder.Entity("RhProject.Domain.Entities.Base", b =>
+                {
+                    b.Navigation("UsuariosBases");
+                });
+
+            modelBuilder.Entity("RhProject.Domain.Entities.Usuario", b =>
+                {
+                    b.Navigation("UsuarioBases");
                 });
 #pragma warning restore 612, 618
         }

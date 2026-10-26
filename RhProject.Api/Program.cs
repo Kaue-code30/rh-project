@@ -61,6 +61,8 @@ builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 // Infrastructure
 builder.Services.AddInfrastructure(builder.Configuration);
 
+builder.Services.AddHttpContextAccessor();
+
 builder.Services.AddScoped<IPermissaoService, PermissaoService>();
 builder.Services.AddScoped<IPerfilUsuarioService, PerfilUsuarioService>();
 builder.Services.AddScoped<IUsuarioLogadoService,UsuarioLogadoService>();
@@ -147,6 +149,8 @@ builder.Services.AddAuthorization(options =>
         });
     }
 });
+
+
 
 var app = builder.Build();
 

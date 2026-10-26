@@ -8,6 +8,8 @@
 
         bool EstaAutenticado { get; }
 
+        int BaseId { get; }
+
         int ObterUsuarioId();
 
         Task<bool> EhAdministradorAsync(CancellationToken cancellationToken = default);
