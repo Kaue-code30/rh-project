@@ -21,7 +21,7 @@ namespace RhProject.Application.Queries.Cooperado.Listar
             var cooperados = await _cooperadoRepository.ObterTodosAsync(cancellationToken);
 
             return cooperados.Select(x => new CooperadoDto
-                {
+            {
                     Id = x.Id,
                     Nome = x.Nome,
                     Email = x.Email,

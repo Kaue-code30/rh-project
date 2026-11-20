@@ -26,10 +26,14 @@ namespace RhProject.Application.Commands.Cooperado.CriarUsuario
 
             var usuarioJaExiste = await _repository.ObterPorCondicaoAsync(usuario => usuario.Email == request.Email && usuario.Ativo, cancellationToken);
 
-
             if(usuarioJaExiste != null)
             {
                 throw new ConflictException("Usuário já cadastrado.");
+            }
+
+            if(request.ConfirmacaoSenha != request.Senha)
+            {
+                throw new ConflictException("As senhas não são iguais.");
             }
 
             var senhaHash = _passwordService.HashPassword(request.Senha);

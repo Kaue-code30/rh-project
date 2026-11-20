@@ -29,6 +29,14 @@ namespace RhProject.Application.Commands.Usuario.CriarUsuario
                 .MaximumLength(128)
                     .WithMessage("A senha não pode exceder 128 caracteres.");
 
+            RuleFor(c => c.ConfirmacaoSenha)
+                .NotEmpty()
+                    .WithMessage("A confirmação de senha é obrigatória.")
+                .MinimumLength(12)
+                    .WithMessage("A confirmação de senha deve possuir pelo menos 12 caracteres.")
+                .MaximumLength(128)
+                    .WithMessage("A confirmação de senha não pode exceder 128 caracteres.");
+
             RuleFor(c => c.PerfilId)
                 .GreaterThan(0)
                     .WithMessage("O perfil informado é inválido.");

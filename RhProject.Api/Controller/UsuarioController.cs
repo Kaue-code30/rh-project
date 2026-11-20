@@ -4,6 +4,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RhProject.Application.Commands.Cooperado.CriarUsuario;
+using RhProject.Application.Queries.Usuario.PerfilLogado;
 using System.IdentityModel.Tokens.Jwt;
 
 namespace RhProject.Api.Controllers
@@ -27,6 +28,16 @@ namespace RhProject.Api.Controllers
             return Ok(id);
         }
 
+        [HttpGet("perfil")]
+        [Authorize]
+        public async Task<IActionResult> GetPerfilUsuarioLogado(CancellationToken cancellationToken)
+        {
+            var id = await _mediator.Send(new PerfilUsuarioLogadoQuery(), cancellationToken);
+
+            return Ok(id);
+        }
+
+
         [HttpPost("cooperado")]
         [Authorize]
         public async Task<IActionResult> CriarUsuarioCooperado([FromBody] CriarUsuarioCooperadoCommand command, CancellationToken cancellationToken)
@@ -37,7 +48,6 @@ namespace RhProject.Api.Controllers
         }
 
         [HttpGet("me")]
-        [Authorize]
         public IActionResult Me()
         {
             var usuarioId = User.FindFirst(JwtRegisteredClaimNames.Sub)?.Value;

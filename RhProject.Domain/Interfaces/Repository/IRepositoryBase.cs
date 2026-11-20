@@ -14,7 +14,7 @@ namespace RhProject.Domain.Interfaces.Repository
         Task Remover(TEntity entity, CancellationToken cancellationToken);
         Task CommitAsync(CancellationToken cancellationToken);
         Task<List<TEntity>> ObterTodosAsync(CancellationToken cancellationToken);
-        Task<List<TEntity>> ObterTodosPorCondicaoAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken);
+        Task<List<TEntity>> ObterTodosPorCondicaoAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken, params Expression<Func<TEntity, object>>[] includes);
         Task<TEntity?> ObterPorCondicaoAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken);
     }
 }

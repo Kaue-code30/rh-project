@@ -35,9 +35,19 @@ namespace RhProject.Infrastructure.Repositories
         {
             return await _context.Set<TEntity>().FirstOrDefaultAsync(predicate, cancellationToken);
         }
-        public virtual async Task<List<TEntity>> ObterTodosPorCondicaoAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken)
+        public async Task<List<TEntity>> ObterTodosPorCondicaoAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default, params Expression<Func<TEntity, object>>[] includes)
         {
-            return await _context.Set<TEntity>().Where(predicate).ToListAsync(cancellationToken);
+            IQueryable<TEntity> query = _context.Set<TEntity>();
+
+            foreach (var include in includes)
+            {
+                query = query.Include(include);
+            }
+
+            return await query
+                .AsNoTracking()
+                .Where(predicate)
+                .ToListAsync(cancellationToken);
         }
 
         public virtual async Task Alterar(TEntity entity, CancellationToken cancellationToken)
